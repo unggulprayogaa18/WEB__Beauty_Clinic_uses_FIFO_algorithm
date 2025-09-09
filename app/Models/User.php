@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-      
+
         'username',
         'password',
         'role',
+        'otp_code',
+        'otp_expires_at',
+        'no_telepon',
     ];
 }

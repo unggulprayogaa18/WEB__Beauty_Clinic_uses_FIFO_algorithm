@@ -128,11 +128,30 @@
             text-transform: capitalize;
         }
 
-        .table-custom .badge-warning { background-color: #fffbeb; color: #b45309; }
-        .table-custom .badge-success { background-color: #f0fdf4; color: #15803d; }
-        .table-custom .badge-danger  { background-color: #fef2f2; color: #b91c1c; }
-        .table-custom .badge-info    { background-color: #eff6ff; color: #1d4ed8; }
-        .table-custom .badge-secondary { background-color: #f3f4f6; color: #4b5563; }
+        .table-custom .badge-warning {
+            background-color: #fffbeb;
+            color: #b45309;
+        }
+
+        .table-custom .badge-success {
+            background-color: #f0fdf4;
+            color: #15803d;
+        }
+
+        .table-custom .badge-danger {
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .table-custom .badge-info {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .table-custom .badge-secondary {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
 
         /* Tombol Aksi */
         .btn-action {
@@ -146,10 +165,10 @@
             font-style: italic;
             color: var(--text-light);
             font-size: 0.85rem;
-            max-width: 250px; /* Batasi lebar agar tidak terlalu panjang */
+            max-width: 250px;
+            /* Batasi lebar agar tidak terlalu panjang */
             white-space: normal;
         }
-
     </style>
 </head>
 
@@ -225,17 +244,26 @@
                     <span></span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false"
+                        aria-controls="laporan">
                         <i class="mdi mdi-file-document-box-multiple menu-icon"></i>
                         <span class="menu-title">Laporan</span>
                         <i class="menu-arrow"></i>
                     </a>
                     <div class="collapse" id="laporan">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.laporan_antrian') }}">Laporan Antrian</a> </li>
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a> </li>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a> </li>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a> </li>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('admin.laporan_antrian') }}">Laporan Antrian</a> </li>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a> </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.laporan_barang_terlaris') }}">Laporan Barang
+                                    Terlaku</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -247,12 +275,17 @@
             <!-- partial:./partials/_navbar.html -->
             <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
                 <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
+                        data-toggle="minimize">
                         <span class="mdi mdi-menu"></span>
                     </button>
                     <div class="navbar-brand-wrapper">
-                        <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('assets/images/11880487944aa78dec-f55d-4b45-8b07-5e6ac3cc350d-removebg-preview.png') }}" width="120px" alt="logo" /></a>
-                        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('assets/images/11880487944aa78dec-f55d-4b45-8b07-5e6ac3cc350d-removebg-preview.png') }}" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo" href="index.html"><img
+                                src="{{ asset('assets/images/11880487944aa78dec-f55d-4b45-8b07-5e6ac3cc350d-removebg-preview.png') }}"
+                                width="120px" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href="index.html"><img
+                                src="{{ asset('assets/images/11880487944aa78dec-f55d-4b45-8b07-5e6ac3cc350d-removebg-preview.png') }}"
+                                alt="logo" /></a>
                     </div>
                     <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1 ms-4">Sistem Manajemen Inventaris</h4>
                     <ul class="navbar-nav navbar-nav-right ms-auto">
@@ -262,14 +295,18 @@
                         <li class="nav-item dropdown me-2">
                             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                 @csrf
-                                <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                                <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+                                    href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                    title="Logout">
                                     <i class="mdi mdi-logout-variant text-primary me-2"></i>
                                     <span class="d-none d-md-block">Logout</span>
                                 </a>
                             </form>
                         </li>
                     </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                        data-toggle="offcanvas">
                         <span class="mdi mdi-menu"></span>
                     </button>
                 </div>
@@ -277,22 +314,23 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    
+
                     @if(session('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+                        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                     @endif
                     @if(session('error'))
-                    <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
+                        <div class="alert alert-danger" role="alert">{{ session('error') }}</div>
                     @endif
                     @if(session('warning'))
-                    <div class="alert alert-warning" role="alert">{{ session('warning') }}</div>
+                        <div class="alert alert-warning" role="alert">{{ session('warning') }}</div>
                     @endif
 
                     <div class="card card-custom">
                         <div class="card-header">
                             <h5 class="card-title">Daftar Antrian Hari Ini</h5>
                             <div class="search-wrapper">
-                                <input type="text" id="searchInput" class="form-control search-input" placeholder="Cari antrian...">
+                                <input type="text" id="searchInput" class="form-control search-input"
+                                    placeholder="Cari antrian...">
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -312,65 +350,75 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($antrians as $antrian)
-                                        <tr>
-                                            <td><strong>{{ $antrian->nomer_antrian ?: '-' }}</strong></td>
-                                            <td>
-                                                <div>{{ $antrian->produk ? $antrian->produk->nama_produk : 'N/A' }}</div>
-                                                <small class="text-muted">ID: {{ $antrian->id_produk }}</small>
-                                            </td>
-                                            <td>{{ $antrian->jumlah_diminta }}</td>
-                                            <td>{{ $antrian->tanggal_permintaan ? \Carbon\Carbon::parse($antrian->tanggal_permintaan)->format('d M Y') : '-' }}</td>
-                                            <td>
-                                                @if (isset($antrian->tanggal_kedaluwarsa_fifo))
-                                                    @php
-                                                        $tgl_kedaluwarsa = \Carbon\Carbon::parse($antrian->tanggal_kedaluwarsa_fifo);
-                                                        $isExpiringSoon = $tgl_kedaluwarsa->isBefore(now()->addMonth());
-                                                    @endphp
-                                                    <span class="{{ $isExpiringSoon ? 'text-danger fw-bold' : '' }}">
-                                                        {{ $tgl_kedaluwarsa->format('d M Y') }}
-                                                    </span>
-                                                @else
-                                                    <span class="text-muted">Stok Habis</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($antrian->status == 'pending')
-                                                    <span class="badge badge-warning">Pending</span>
-                                                @elseif($antrian->status == 'diproses')
-                                                    <span class="badge badge-info">Diproses</span>
-                                                @elseif($antrian->status == 'gagal')
-                                                    <span class="badge badge-danger">Gagal</span>
-                                                @elseif($antrian->status == 'selesai')
-                                                    <span class="badge badge-success">Selesai</span>
-                                                @else
-                                                    <span class="badge badge-secondary">{{ ucfirst($antrian->status) }}</span>
-                                                @endif
-                                            </td>
-                                            <td><div class="note-text">{{ $antrian->catatan_gagal ?: '-' }}</div></td>
-                                            <td>
-                                                @if(in_array($antrian->status, ['pending', 'gagal']))
-                                                <form action="{{ route('daftarAntrian.process', $antrian->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Anda yakin ingin memproses antrian ini?');">
-                                                    @csrf
-                                                    <input type="hidden" name="id_produk" value="{{ $antrian->id_produk }}">
-                                                    <input type="hidden" name="jumlah_diminta" value="{{ $antrian->jumlah_diminta }}">
-                                                    <button type="submit" class="btn btn-primary btn-sm btn-action" title="Proses Antrian">
-                                                        <i class="mdi mdi-cogs"></i> Proses
-                                                    </button>
-                                                </form>
-                                                @elseif($antrian->status == 'selesai')
-                                                <button class="btn btn-success btn-sm btn-action" disabled>
-                                                    <i class="mdi mdi-check-circle"></i> Selesai
-                                                </button>
-                                                @endif
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td><strong>{{ $antrian->nomer_antrian ?: '-' }}</strong></td>
+                                                <td>
+                                                    <div>{{ $antrian->produk ? $antrian->produk->nama_produk : 'N/A' }}
+                                                    </div>
+                                                    <small class="text-muted">ID: {{ $antrian->id_produk }}</small>
+                                                </td>
+                                                <td>{{ $antrian->jumlah_diminta }}</td>
+                                                <td>{{ $antrian->tanggal_permintaan ? \Carbon\Carbon::parse($antrian->tanggal_permintaan)->format('d M Y') : '-' }}
+                                                </td>
+                                                <td>
+                                                    @if (isset($antrian->tanggal_kedaluwarsa_fifo))
+                                                        @php
+                                                            $tgl_kedaluwarsa = \Carbon\Carbon::parse($antrian->tanggal_kedaluwarsa_fifo);
+                                                            $isExpiringSoon = $tgl_kedaluwarsa->isBefore(now()->addMonth());
+                                                        @endphp
+                                                        <span class="{{ $isExpiringSoon ? 'text-danger fw-bold' : '' }}">
+                                                            {{ $tgl_kedaluwarsa->format('d M Y') }}
+                                                        </span>
+                                                    @else
+                                                        <span class="text-muted">Stok Habis</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($antrian->status == 'pending')
+                                                        <span class="badge badge-warning">Pending</span>
+                                                    @elseif($antrian->status == 'diproses')
+                                                        <span class="badge badge-info">Diproses</span>
+                                                    @elseif($antrian->status == 'gagal')
+                                                        <span class="badge badge-danger">Gagal</span>
+                                                    @elseif($antrian->status == 'selesai')
+                                                        <span class="badge badge-success">Selesai</span>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-secondary">{{ ucfirst($antrian->status) }}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="note-text">{{ $antrian->catatan_gagal ?: '-' }}</div>
+                                                </td>
+                                                <td>
+                                                    @if(in_array($antrian->status, ['pending', 'gagal']))
+                                                        <form action="{{ route('daftarAntrian.process', $antrian->id) }}"
+                                                            method="POST" class="d-inline"
+                                                            onsubmit="return confirm('Anda yakin ingin memproses antrian ini?');">
+                                                            @csrf
+                                                            <input type="hidden" name="id_produk"
+                                                                value="{{ $antrian->id_produk }}">
+                                                            <input type="hidden" name="jumlah_diminta"
+                                                                value="{{ $antrian->jumlah_diminta }}">
+                                                            <button type="submit" class="btn btn-primary btn-sm btn-action"
+                                                                title="Proses Antrian">
+                                                                <i class="mdi mdi-cogs"></i> Proses
+                                                            </button>
+                                                        </form>
+                                                    @elseif($antrian->status == 'selesai')
+                                                        <button class="btn btn-success btn-sm btn-action" disabled>
+                                                            <i class="mdi mdi-check-circle"></i> Selesai
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                            </tr>
                                         @empty
-                                        <tr>
-                                            <td colspan="8" class="text-center py-5">
-                                                <i class="mdi mdi-information-outline mdi-24px text-muted"></i>
-                                                <p class="mt-2 text-muted">Tidak ada data antrian untuk hari ini.</p>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td colspan="8" class="text-center py-5">
+                                                    <i class="mdi mdi-information-outline mdi-24px text-muted"></i>
+                                                    <p class="mt-2 text-muted">Tidak ada data antrian untuk hari ini.</p>
+                                                </td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -401,7 +449,7 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Skrip untuk menampilkan tanggal hari ini
             const elemenTanggal = document.getElementById('tanggal-sekarang-js');
             if (elemenTanggal) {
@@ -422,7 +470,7 @@
             const tableRows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
             if (searchInput) {
-                searchInput.addEventListener('keyup', function() {
+                searchInput.addEventListener('keyup', function () {
                     const searchTerm = searchInput.value.toLowerCase();
 
                     for (let i = 0; i < tableRows.length; i++) {

@@ -40,7 +40,7 @@
             </div>
         </div>
         <!-- partial:./partials/_sidebar.html -->
-       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 {{-- Pastikan ada pengguna yang sedang login --}}
                 @auth
@@ -85,7 +85,7 @@
                                 <span class="menu-title">Barang Masuk</span>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link" href="#">
                                 <i class="mdi mdi-truck-fast menu-icon"></i>
                                 <span class="menu-title">Barang Keluar</span>
@@ -152,6 +152,10 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan stok</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.laporan_barang_terlaris') }}">Laporan Barang
+                                            Terlaku</a>
                                     </li>
                                 </ul>
                             </div>
@@ -268,7 +272,7 @@
                                 </a>
                             </div>
                         </li> -->
-                         <li class="nav-item dropdown me-2">
+                        <li class="nav-item dropdown me-2">
                             {{-- Form ini akan mengirimkan request POST ke route 'logout' --}}
                             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                 @csrf
@@ -383,7 +387,7 @@
                             </div>
                             <br> {{-- Sedikit spasi antar kartu --}}
 
-                       
+
                         </div>
                     </div>
 
@@ -476,7 +480,7 @@
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:./partials/_footer.html -->
-        
+
             <!-- partial -->
         </div>
         <!-- main-panel ends -->

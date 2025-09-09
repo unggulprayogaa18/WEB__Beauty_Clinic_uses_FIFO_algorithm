@@ -85,7 +85,7 @@
                                 <span class="menu-title">Barang Masuk</span>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link" href="#">
                                 <i class="mdi mdi-truck-fast menu-icon"></i>
                                 <span class="menu-title">Barang Keluar</span>
@@ -152,6 +152,10 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan stok</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.laporan_barang_terlaris') }}">Laporan Barang
+                                            Terlaku</a>
                                     </li>
                                 </ul>
                             </div>
@@ -441,7 +445,7 @@
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:./partials/_footer.html -->
-          
+
             <!-- partial -->
         </div>
         <!-- main-panel ends -->

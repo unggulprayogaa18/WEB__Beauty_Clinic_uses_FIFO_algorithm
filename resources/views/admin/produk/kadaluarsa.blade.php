@@ -150,6 +150,10 @@
                                       <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan stok</a>
                             </li>
+                            <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.laporan_barang_terlaris') }}">Laporan Barang
+                                            Terlaku</a>
+                                    </li>
                         </ul>
                     </div>
                 </li>

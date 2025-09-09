@@ -28,6 +28,10 @@ use App\Http\Controllers\ManagerController;
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'sendResetLinkWhatsApp'])->name('password.send.otp');
+Route::get('reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+Route::post('reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'reset'])->name('password.update');
 
 // Contoh route dashboard berdasarkan role
 Route::get('/admin/dashboard', function () {
@@ -63,6 +67,9 @@ Route::get('/admin/kelola-pengguna', [AdminController::class, 'kelolaPengguna'])
 Route::get('/admin/laporan/barang-masuk', [LaporanController::class, 'barangMasuk'])->name('admin.laporan_barang_masuk');
 Route::get('/admin/laporan/barang-keluar', [LaporanController::class, 'barangKeluar'])->name(name: 'admin.laporan_barang_keluar');
 Route::get('/admin/laporan/antrian', [LaporanController::class, 'Antrian'])->name('admin.laporan_antrian');
+// TAMBAHKAN ROUTE BARU DI SINI
+Route::get('/admin/laporan/barang-terlaris', [LaporanController::class, 'barangTerlaris'])->name('admin.laporan_barang_terlaris');
+
 // routes/web.php// routes/web.php
 // routes/web.php
 // Route for the main dashboard view

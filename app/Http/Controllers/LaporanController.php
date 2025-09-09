@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\BarangKeluar;
 use App\Models\BarangMasuk;
 use App\Models\DaftarAntrian;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
@@ -107,4 +109,50 @@ class LaporanController extends Controller
             return redirect()->route('laporan.antrian')->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
     }
+
+
+     public function barangTerlaris(Request $request)
+    {
+        // Ambil periode dari request, default-nya 'bulanan'
+        $periode = $request->input('periode', 'bulanan');
+        $tanggal_mulai = $request->input('tanggal_mulai');
+        $tanggal_akhir = $request->input('tanggal_akhir');
+        $title = 'Laporan Barang Terlaris';
+
+        // Query dasar untuk mengambil data barang keluar
+        $query = BarangKeluar::join('produk', 'barang_keluar.id_produk', '=', 'produk.id_produk')
+            ->select('produk.nama_produk', DB::raw('SUM(barang_keluar.jumlah) as total_terjual'))
+            ->groupBy('produk.id_produk', 'produk.nama_produk');
+
+        // Terapkan filter berdasarkan periode yang dipilih
+        switch ($periode) {
+            case 'harian':
+                $query->whereDate('barang_keluar.tanggal_keluar', Carbon::today());
+                $title .= ' (Hari Ini)';
+                break;
+            case 'mingguan':
+                $query->whereBetween('barang_keluar.tanggal_keluar', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                $title .= ' (Minggu Ini)';
+                break;
+            case 'custom':
+                if ($tanggal_mulai && $tanggal_akhir) {
+                    $query->whereBetween('barang_keluar.tanggal_keluar', [$tanggal_mulai, $tanggal_akhir]);
+                    $title .= ' (Periode ' . Carbon::parse($tanggal_mulai)->format('d/m/Y') . ' - ' . Carbon::parse($tanggal_akhir)->format('d/m/Y') . ')';
+                }
+                break;
+            case 'bulanan':
+            default:
+                $query->whereMonth('barang_keluar.tanggal_keluar', Carbon::now()->month)
+                      ->whereYear('barang_keluar.tanggal_keluar', Carbon::now()->year);
+                $title .= ' (Bulan Ini)';
+                break;
+        }
+
+        // Urutkan berdasarkan total penjualan terbanyak
+        $barangLaku = $query->orderBy('total_terjual', 'desc')->get();
+
+        // Kirim data ke view
+        return view('admin.laporan.barang_terlaris', compact('barangLaku', 'title', 'periode', 'tanggal_mulai', 'tanggal_akhir'));
+    }
+
 }

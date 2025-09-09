@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException; // <-- Penting: Tambahkan ini
+
 class UserController extends Controller
 {
     /**
@@ -24,87 +27,131 @@ class UserController extends Controller
         return view('admin.kelola_pengguna.kelolapengguna', compact('users'));
     }
 
-   public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        // Untuk debugging, Anda bisa uncomment baris di bawah ini untuk melihat data request
-        // dd($request->all());
-
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255|unique:users,username',
-            'password' => 'required|string|min:6|confirmed', // 'confirmed' akan mencocokkan dengan 'password_confirmation'
-            'role' => ['required', Rule::in(['admin', 'manager'])],
-        ], [
-            'username.required' => 'Username wajib diisi.',
-            'username.unique' => 'Username ini sudah digunakan.',
-            'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal harus 6 karakter.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
-            'role.required' => 'Role wajib dipilih.',
-            'role.in' => 'Role yang dipilih tidak valid.',
-        ]);
-
         try {
+            // ==================== BLOK PERBAIKAN ====================
+            $validatedData = $request->validate([
+                'username' => 'required|string|max:255|unique:users,username',
+                'password' => 'required|string|min:6|confirmed',
+                'role' => ['required', Rule::in(['admin', 'manager'])],
+                'no_telepon' => 'required|numeric|min:10', // <-- GANTI 'integer' menjadi 'numeric'
+            ], [
+                'username.required' => 'Username wajib diisi.',
+                'username.unique' => 'Username ini sudah digunakan.',
+                'password.required' => 'Password wajib diisi.',
+                'password.min' => 'Password minimal harus 6 karakter.',
+                'password.confirmed' => 'Konfirmasi password tidak cocok.',
+                'role.required' => 'Role wajib dipilih.',
+                'role.in' => 'Role yang dipilih tidak valid.',
+                'no_telepon.required' => 'Nomor telepon wajib diisi.',
+                'no_telepon.numeric' => 'Nomor telepon hanya boleh berisi angka.', // <-- Pesan error disesuaikan
+                'no_telepon.min' => 'Nomor telepon minimal harus 10 digit.', // <-- Pesan error disesuaikan
+            ]);
+            // ================= END BLOK PERBAIKAN =================
+
             User::create([
                 'username' => $validatedData['username'],
-                'password' => Hash::make($validatedData['password']), // <--- PERBAIKAN: PASSWORD DI-HASH
+                'password' => Hash::make($validatedData['password']),
                 'role' => $validatedData['role'],
+                'no_telepon' => $validatedData['no_telepon'],
             ]);
 
             return redirect()->route('admin.users.index')
-                         ->with('success_user_store', 'Pengguna baru berhasil ditambahkan!');
+                ->with('success_user_store', 'Pengguna baru berhasil ditambahkan!');
+
+        } catch (ValidationException $e) {
+            // Log error validasi secara spesifik untuk debugging
+            Log::error('Gagal validasi saat menambah pengguna baru: ' . $e->getMessage(), $e->errors());
+            // Redirect kembali dengan pesan error dari validasi untuk ditampilkan di form
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput()
+                ->with('error_user_store', 'Gagal menambahkan pengguna. Periksa kembali data yang Anda masukkan.');
+
         } catch (\Exception $e) {
+            // Log error umum lainnya (misal, koneksi database gagal)
             Log::error('Error saat menyimpan pengguna baru: ' . $e->getMessage());
-            // Kirim kembali dengan error dan input sebelumnya
             return back()->withInput()
-                         ->with('error_user_store', 'Gagal menambahkan pengguna. Terjadi kesalahan: ' . $e->getMessage()) // Tampilkan pesan error dari exception untuk debug
-                         ->with('form_type', 'create_error'); 
+                ->with('error_user_store', 'Terjadi kesalahan pada server. Gagal menambahkan pengguna.');
         }
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function edit(User $user)
     {
-        // Method ini akan dipanggil jika Anda memiliki halaman edit terpisah.
-        // Jika form edit ada di halaman index, Anda mungkin tidak memerlukan ini secara langsung,
-        // tapi route model binding ($user) tetap berguna untuk update.
-        $users = User::orderBy('username', 'asc')->paginate(10); // Ambil semua user untuk ditampilkan di tabel
-        return view('admin.users.index', compact('users', 'userToEdit')); // Kirim user yang akan diedit ke view
+        // NOTE: Method ini biasanya untuk halaman edit terpisah.
+        // Jika form edit digabung di halaman index, method ini mungkin tidak terpakai
+        // dan logika update langsung ditangani oleh method update().
+        $users = User::orderBy('username', 'asc')->paginate(10);
+        return view('admin.kelola_pengguna.kelolapengguna', [
+            'users' => $users,
+            'userToEdit' => $user
+        ]);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => 'nullable|string|min:6|confirmed', // Password opsional saat update
             'role' => ['required', Rule::in(['admin', 'manager'])],
+            'no_telepon' => ['required', 'numeric', 'min:10'], // Pastikan validasi update juga benar
         ], [
             'username.required' => 'Username wajib diisi.',
             'username.unique' => 'Username ini sudah digunakan pengguna lain.',
             'password.min' => 'Password minimal harus 6 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'role.required' => 'Role wajib dipilih.',
-            'role.in' => 'Role yang dipilih tidak valid.',
+            'no_telepon.required' => 'Nomor telepon wajib diisi.',
+            'no_telepon.numeric' => 'Nomor telepon hanya boleh berisi angka.',
         ]);
 
         try {
-            $dataToUpdate = [
-                'username' => $validatedData['username'],
-                'role' => $validatedData['role'],
-            ];
+            $user->username = $validatedData['username'];
+            $user->role = $validatedData['role'];
+            $user->no_telepon = $validatedData['no_telepon'];
 
             if (!empty($validatedData['password'])) {
-                $dataToUpdate['password'] = $validatedData['password']; // HASH PASSWORD JIKA DIUBAH
+                $user->password = Hash::make($validatedData['password']); // HASH PASSWORD JIKA DIUBAH
             }
 
-            $user->update($dataToUpdate);
+            $user->save();
 
             return redirect()->route('admin.users.index')
                 ->with('success_user_store', 'Data pengguna berhasil diperbarui!');
         } catch (\Exception $e) {
             Log::error('Error saat update pengguna (ID: ' . $user->id . '): ' . $e->getMessage());
             return back()->withInput()
-                ->with('error_user_store', 'Gagal memperbarui data pengguna. Silakan coba lagi.')
-                ->with('form_type', 'update_error') // Untuk membantu JS di view
-                ->with('editing_user_id', $user->id); // Untuk membantu JS di view
+                ->with('error_user_store', 'Gagal memperbarui data pengguna. Silakan coba lagi.');
         }
     }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(User $user)
     {
         // Mencegah admin menghapus dirinya sendiri

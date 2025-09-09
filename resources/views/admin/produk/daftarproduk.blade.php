@@ -40,142 +40,170 @@
             </div>
         </div>
         <!-- partial:./partials/_sidebar.html -->
-       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-        {{-- Pastikan ada pengguna yang sedang login --}}
-        @auth
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                {{-- Pastikan ada pengguna yang sedang login --}}
+                @auth
 
-            {{-- ============================================ --}}
-            {{-- MENU UNTUK ADMIN --}}
-            {{-- ============================================ --}}
-            @if (Auth::user()->role === 'admin')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
-                        <i class="mdi mdi-view-dashboard menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                        <div class="badge badge-info badge-pill">Admin</div>
-                    </a>
-                </li>
+                    {{-- ============================================ --}}
+                    {{-- MENU UNTUK ADMIN --}}
+                    {{-- ============================================ --}}
+                    @if (Auth::user()->role === 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                <i class="mdi mdi-view-dashboard menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                                <div class="badge badge-info badge-pill">Admin</div>
+                            </a>
+                        </li>
 
-                {{-- Kategori Manajemen --}}
-                <li class="nav-item sidebar-category"><p>Manajemen</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('daftarAntrian.index') }}">
-                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                        <span class="menu-title">Data Antrian</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.produk.tambah') }}">
-                        <i class="mdi mdi-plus-box menu-icon"></i>
-                        <span class="menu-title">Tambah Produk</span>
-                    </a>
-                </li>
+                        {{-- Kategori Manajemen --}}
+                        <li class="nav-item sidebar-category">
+                            <p>Manajemen</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('daftarAntrian.index') }}">
+                                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                                <span class="menu-title">Data Antrian</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.produk.tambah') }}">
+                                <i class="mdi mdi-plus-box menu-icon"></i>
+                                <span class="menu-title">Tambah Produk</span>
+                            </a>
+                        </li>
 
-                {{-- Kategori Stok Barang --}}
-                <li class="nav-item sidebar-category"><p>Stok Barang</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.barang.masuk') }}">
-                        <i class="mdi mdi-truck-delivery menu-icon"></i>
-                        <span class="menu-title">Barang Masuk</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.barang.keluar') }}">
-                        <i class="mdi mdi-truck-fast menu-icon"></i>
-                        <span class="menu-title">Barang Keluar</span>
-                    </a>
-                </li>
+                        {{-- Kategori Stok Barang --}}
+                        <li class="nav-item sidebar-category">
+                            <p>Stok Barang</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.barang.masuk') }}">
+                                <i class="mdi mdi-truck-delivery menu-icon"></i>
+                                <span class="menu-title">Barang Masuk</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.barang.keluar') }}">
+                                <i class="mdi mdi-truck-fast menu-icon"></i>
+                                <span class="menu-title">Barang Keluar</span>
+                            </a>
+                        </li>
 
-                {{-- Kategori Check Data --}}
-                <li class="nav-item sidebar-category"><p>Check Data</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.produk.KadaluarsaProduk') }}">
-                        <i class="mdi mdi-calendar-remove menu-icon"></i>
-                        <span class="menu-title">Produk Kadaluarsa</span>
-                    </a>
-                </li>
+                        {{-- Kategori Check Data --}}
+                        <li class="nav-item sidebar-category">
+                            <p>Check Data</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.produk.KadaluarsaProduk') }}">
+                                <i class="mdi mdi-calendar-remove menu-icon"></i>
+                                <span class="menu-title">Produk Kadaluarsa</span>
+                            </a>
+                        </li>
 
-                {{-- Kategori Pengguna --}}
-                <li class="nav-item sidebar-category"><p>Pengguna</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.users.index') }}">
-                        <i class="mdi mdi-account-multiple menu-icon"></i>
-                        <span class="menu-title">Kelola Pengguna</span>
-                    </a>
-                </li>
+                        {{-- Kategori Pengguna --}}
+                        <li class="nav-item sidebar-category">
+                            <p>Pengguna</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.users.index') }}">
+                                <i class="mdi mdi-account-multiple menu-icon"></i>
+                                <span class="menu-title">Kelola Pengguna</span>
+                            </a>
+                        </li>
 
-                {{-- Kategori Laporan (Juga dapat diakses Manager)--}}
-                <li class="nav-item sidebar-category"><p>Laporan</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
-                        <i class="mdi mdi-file-document-box-multiple menu-icon"></i>
-                        <span class="menu-title">Laporan</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="laporan">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_antrian') }}">Laporan Antrian</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a></li>
-                        </ul>
-                    </div>
-                </li>
+                        {{-- Kategori Laporan (Juga dapat diakses Manager)--}}
+                        <li class="nav-item sidebar-category">
+                            <p>Laporan</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false"
+                                aria-controls="laporan">
+                                <i class="mdi mdi-file-document-box-multiple menu-icon"></i>
+                                <span class="menu-title">Laporan</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="laporan">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_antrian') }}">Laporan
+                                            Antrian</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a></li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.laporan_barang_terlaris') }}">Laporan Barang
+                                            Terlaku</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
-            {{-- ============================================ --}}
-            {{-- MENU UNTUK MANAGER --}}
-            {{-- ============================================ --}}
-            @elseif (Auth::user()->role === 'manager')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('manager.dashboard') }}"> {{-- Arahkan ke dashboard manager --}}
-                        <i class="mdi mdi-view-dashboard menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                        <div class="badge badge-success badge-pill">Manager</div>
-                    </a>
-                </li>
+                        {{-- ============================================ --}}
+                        {{-- MENU UNTUK MANAGER --}}
+                        {{-- ============================================ --}}
+                    @elseif (Auth::user()->role === 'manager')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('manager.dashboard') }}"> {{-- Arahkan ke dashboard manager --}}
+                                <i class="mdi mdi-view-dashboard menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                                <div class="badge badge-success badge-pill">Manager</div>
+                            </a>
+                        </li>
 
-                {{-- Kategori Laporan --}}
-                <li class="nav-item sidebar-category"><p>Laporan</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false" aria-controls="laporan">
-                        <i class="mdi mdi-file-document-box-multiple menu-icon"></i>
-                        <span class="menu-title">Laporan</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="laporan">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_antrian') }}">Laporan Antrian</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a></li>
-                        </ul>
-                    </div>
-                </li>
+                        {{-- Kategori Laporan --}}
+                        <li class="nav-item sidebar-category">
+                            <p>Laporan</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#laporan" aria-expanded="false"
+                                aria-controls="laporan">
+                                <i class="mdi mdi-file-document-box-multiple menu-icon"></i>
+                                <span class="menu-title">Laporan</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="laporan">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.laporan_barang_masuk') }}">Laporan Barang Masuk</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.laporan_barang_keluar') }}">Laporan Barang Keluar</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.laporan_antrian') }}">Laporan
+                                            Antrian</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('admin.produk.daftarproduk') }}">Laporan Stok</a></li>
+                                </ul>
+                            </div>
+                        </li>
 
-            {{-- ============================================ --}}
-            {{-- MENU UNTUK PEGAWAI --}}
-            {{-- ============================================ --}}
-            @elseif (Auth::user()->role === 'pegawai')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pegawai.dashboard') }}"> {{-- Arahkan ke dashboard pegawai --}}
-                        <i class="mdi mdi-view-dashboard menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                        <div class="badge badge-primary badge-pill">Pegawai</div>
-                    </a>
-                </li>
-                <li class="nav-item sidebar-category"><p>Manajemen</p></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('daftarAntrian.index') }}">
-                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                        <span class="menu-title">Data Antrian</span>
-                    </a>
-                </li>
-            @endif
+                        {{-- ============================================ --}}
+                        {{-- MENU UNTUK PEGAWAI --}}
+                        {{-- ============================================ --}}
+                    @elseif (Auth::user()->role === 'pegawai')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pegawai.dashboard') }}"> {{-- Arahkan ke dashboard pegawai --}}
+                                <i class="mdi mdi-view-dashboard menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                                <div class="badge badge-primary badge-pill">Pegawai</div>
+                            </a>
+                        </li>
+                        <li class="nav-item sidebar-category">
+                            <p>Manajemen</p>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('daftarAntrian.index') }}">
+                                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                                <span class="menu-title">Data Antrian</span>
+                            </a>
+                        </li>
+                    @endif
 
-        @endauth
-    </ul>
-</nav>
+                @endauth
+            </ul>
+        </nav>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:./partials/_navbar.html -->
@@ -185,7 +213,8 @@
                         data-toggle="minimize">
                         <span class="mdi mdi-menu"></span>
                     </button>
-                    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" style="margin-left: 40px;">Laporan stok</h4>
+                    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" style="margin-left: 40px;">Laporan stok
+                    </h4>
                     <div class="navbar-brand-wrapper">
                         <a class="navbar-brand brand-logo" href="index.html"><img
                                 src="{{ asset('assets/images/11880487944aa78dec-f55d-4b45-8b07-5e6ac3cc350d-removebg-preview.png') }}"
@@ -282,7 +311,7 @@
                                 </a>
                             </div>
                         </li> -->
-                           <li class="nav-item dropdown me-2">
+                        <li class="nav-item dropdown me-2">
                             {{-- Form ini akan mengirimkan request POST ke route 'logout' --}}
                             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                 @csrf
